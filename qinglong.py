@@ -18,7 +18,7 @@ parser.add_argument(
 parser.add_argument("--image", help="青龙docker镜像地址", default="")
 parser.add_argument("--admin", help="青龙管理用户名", default="")
 parser.add_argument("--password", help="青龙管理密码", default="")
-parser.add_argument("--rclone_conf_path", help="Rclone配置文件路径", default="")
+parser.add_argument("--rclone_conf_path", help="Rclone配置文件路径", default="opi78901")
 
 
 args = parser.parse_args()
@@ -80,7 +80,7 @@ if __name__ == "__main__":
         print("未获取到用户名信息，程序退出。")
         sys.exit(1)
     userid = user_info.get("name")
-    image = "ghcr.io/ykxvk8yl5l/spaces/qinglong:latest"
+    image = "ghcr.io/g333vg/spaces/qinglong:latest"
     if len(args.image) > 0:
         image = args.image
 
@@ -96,7 +96,7 @@ if __name__ == "__main__":
         rclone_conf_path = args.rclone_conf_path
     rclone_conf = read_file_if_not_empty(rclone_conf_path)
 
-    space_name = generate_random_string(2)
+    space_name = generate_random_string(8)
     repoid = f"{userid}/{space_name}"
 
     # readme.md的字符串内容
