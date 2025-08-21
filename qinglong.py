@@ -19,10 +19,14 @@ parser.add_argument("--image", help="青龙docker镜像地址", default="")
 parser.add_argument("--admin", help="青龙管理用户名", default="")
 parser.add_argument("--password", help="青龙管理密码", default="")
 parser.add_argument("--rclone_conf_path", help="Rclone配置文件路径", default="")
-parser.add_argument("--remote_folder", help="Rclone远程文件夹路径", default="huggingface:/opi78901")
 
 
 args = parser.parse_args()
+
+
+# def generate_random_string(length=10):
+#     chars = string.ascii_letters + string.digits  # 包含大小写字母和数字
+#     return "".join(random.choices(chars, k=length))
 
 
 def generate_random_string(length=10):
@@ -91,12 +95,8 @@ if __name__ == "__main__":
     if len(args.rclone_conf_path) > 0:
         rclone_conf_path = args.rclone_conf_path
     rclone_conf = read_file_if_not_empty(rclone_conf_path)
-    
-    remote_folder = "huggingface:/dovprr33"
-    if len(args.remote_folder) > 0:
-        remote_folder = args.remote_folder
 
-    space_name = generate_random_string(8)
+    space_name = generate_random_string(2)
     repoid = f"{userid}/{space_name}"
 
     # readme.md的字符串内容
@@ -123,7 +123,6 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
             {"key": "ADMIN_USERNAME", "value": admin},
             {"key": "ADMIN_PASSWORD", "value": password},
             {"key": "RCLONE_CONF", "value": rclone_conf},
-            {"key": "REMOTE_FOLDER", "value": remote_folder},
         ],
     )
     # api.add_space_secret(repo_id=repoid, key="ADMIN_USERNAME", value=admin)
