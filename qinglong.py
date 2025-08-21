@@ -18,8 +18,8 @@ parser.add_argument(
 parser.add_argument("--image", help="青龙docker镜像地址", default="")
 parser.add_argument("--admin", help="青龙管理用户名", default="")
 parser.add_argument("--password", help="青龙管理密码", default="")
-parser.add_argument("--rclone_conf_path", help="Rclone配置文件路径", default="opi78901")
-parser.add_argument("--remote_folder", help="Rclone远程文件夹路径", default="huggingface:/dovprr33")
+parser.add_argument("--rclone_conf_path", help="Rclone配置文件路径", default="")
+parser.add_argument("--remote_folder", help="Rclone远程文件夹路径", default="huggingface:/opi78901")
 
 
 args = parser.parse_args()
