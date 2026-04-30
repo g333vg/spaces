@@ -1,15 +1,14 @@
 FROM rclone/rclone:latest AS rclone
-FROM nousresearch/hermes-agent:latest
+FROM node:24-slim
 ENV REMOTE_FOLDER="huggingface:/hermes"
 
 
-# Install curl to fetch the setup script
-RUN apt-get update && apt-get install -y lsof nginx curl ca-certificates gnupg && \
-    curl -fsSL https://deb.nodesource.com/setup_23.x | bash - && \
-    apt-get install -y nodejs npm && \
+RUN apt-get update && apt-get install -y lsof nginx curl git python3 ripgrep ffmpeg build-essential psmisc ca-certificates gnupg && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+#RUN curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+RUN pip install --no-cache-dir git+https://github.com/NousResearch/hermes-agent.git
 
 COPY --from=rclone /usr/local/bin/rclone /usr/bin/rclone
 COPY entrypoint.sh /entrypoint.sh
