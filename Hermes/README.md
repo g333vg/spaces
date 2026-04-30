@@ -16,7 +16,7 @@ AUTH_TOKEN:登陆验证Token
 
 # 关于备份可以让AI建立定时任务执行以下代码
 ```
-sh /app/sync.sh backup
+bash /app/sync.sh backup
 ```
 ## 备份文件要注意 sync.sh里的文件夹要以/结尾
 
