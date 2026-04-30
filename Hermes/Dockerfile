@@ -22,6 +22,8 @@ RUN npm install -g pnpm pm2 hermes-web-ui
 
 
 WORKDIR /app
+COPY sync.sh .
+RUN chmod +x sync.sh
 
 RUN rclone config -h
 
