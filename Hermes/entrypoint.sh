@@ -47,10 +47,16 @@ echo -e "nginx启动成功...\n"
 
 
 echo -e "======================启动pm2服务========================\n"
-pm2 start "hermes gateway run" --name "hermes"
-pm2 start "hermes-web-ui start" --name "hermes-web-ui"
-pm2 startup
-pm2 save
+if [ -f /root/.pm2/dump.pm2 ]; then
+  echo "Dump exists, restoring..."
+  pm2 resurrect
+else
+  echo "No dump, starting fresh..."
+  pm2 start "hermes gateway run" --name "hermes"
+  pm2 start "hermes-web-ui start" --name "hermes-web-ui"
+  pm2 startup
+  pm2 save
+fi
 
 
 tail -f /dev/null
