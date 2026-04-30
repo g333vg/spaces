@@ -6,7 +6,7 @@ ENV REMOTE_FOLDER="huggingface:/hermes"
 # Install curl to fetch the setup script
 RUN apt-get update && apt-get install -y lsof nginx curl ca-certificates gnupg && \
     curl -fsSL https://deb.nodesource.com/setup_23.x | bash - && \
-    apt-get install -y nodejs && \
+    apt-get install -y nodejs npm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
