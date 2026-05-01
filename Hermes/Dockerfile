@@ -20,6 +20,7 @@ RUN chmod +x /entrypoint.sh
 
 RUN npm install -g pnpm pm2 hermes-web-ui
 
+ENV PATH=/root/.local/bin:$PATH
 
 WORKDIR /app
 COPY sync.sh .
