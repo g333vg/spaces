@@ -18,7 +18,7 @@ COPY apps.conf /etc/nginx/conf.d/apps.conf
 
 RUN chmod +x /entrypoint.sh
 
-RUN npm install -g pnpm pm2 hermes-web-ui@0.5.8
+RUN npm install -g pnpm pm2 hermes-web-ui@0.5.7
 
 ENV PATH=/root/.local/bin:$PATH
 
