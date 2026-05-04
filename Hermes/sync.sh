@@ -7,7 +7,9 @@
 # 本地需要备份/还原的路径
 # 目录末尾加 "/" 表示目录
 OPENCLAW_PATHS="
-/root/
+/root/.hermes/
+/root/.pm2/
+/root/hermes-web-ui/
 "
 
 # ----------------------------
