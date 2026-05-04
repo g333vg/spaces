@@ -25,8 +25,9 @@ if [ -n "$RCLONE_CONF" ]; then
       echo "初次安装"
     else
         echo "远程文件夹不为空开始还原"
-        rclone lsf $REMOTE_FOLDER: --dirs-only | while read dir; do
-            rclone sync "$REMOTE_FOLDER:$dir" "/$dir" --ignore-times -P
+        rclone lsf $REMOTE_FOLDER: --dirs-only -R | while read dir; do
+            mkdir -p "/$dir"
+            rclone copy "$REMOTE_FOLDER:$dir" "/$dir" -P
         done
         echo "恢复完成."   
     fi
