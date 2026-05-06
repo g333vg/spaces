@@ -15,4 +15,5 @@ RUN chmod +x /entrypoint.sh
 # 启动时自动 preload
 ENV NODE_OPTIONS="-r /app/server/patch-backup.js"
 
+EXPOSE 3001
 ENTRYPOINT ["/entrypoint.sh"]
