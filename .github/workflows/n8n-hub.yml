@@ -1,4 +1,4 @@
-name: Build halalcloud 
+name: Build and Push N8n Docker Image to docker hub 
 
 on:
   repository_dispatch:
@@ -35,9 +35,9 @@ jobs:
       run: echo ${{ steps.buildx.outputs.platforms }}
     - name: Run Buildx
       run: |
-          cd Halalcloud
+          cd Base
           docker buildx build . \
             --platform linux/amd64 \
             --output "type=image,push=true" \
             --file Dockerfile-hub \
-            --tag ykxvk8yl5l/halalcloud:latest
+            --tag ykxvk8yl5l/n8n:latest

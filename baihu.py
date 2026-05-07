@@ -6,7 +6,8 @@ import sys
 import argparse
 from huggingface_hub import HfApi
 
-parser = argparse.ArgumentParser(description="抱脸SDK创建N8n")
+
+parser = argparse.ArgumentParser(description="抱脸创建白虎面板")
 parser.add_argument(
     "--token",
     type=str,
@@ -14,12 +15,18 @@ parser.add_argument(
     help="抱脸的Token,需要写权限",
     default="",
 )
-parser.add_argument("--image", help="Docker镜像地址", default="")
-parser.add_argument("--key", help="N8N的N8N_ENCRYPTION_KEY", default="")
-parser.add_argument("--password", help="Code Server的管理密码", default="")
-parser.add_argument("--rclone_conf_path", help="Rclone配置", default="")
+parser.add_argument("--image", help="白虎docker镜像地址", default="")
+parser.add_argument("--password", help="白虎管理密码", default="")
+parser.add_argument("--rclone_conf_path", help="Rclone配置文件路径", default="")
+
 
 args = parser.parse_args()
+
+
+# def generate_random_string(length=10):
+#     chars = string.ascii_letters + string.digits  # 包含大小写字母和数字
+#     return "".join(random.choices(chars, k=length))
+
 
 def generate_random_string(length=10):
     if length < 1:
@@ -72,58 +79,47 @@ if __name__ == "__main__":
         print("未获取到用户名信息，程序退出。")
         sys.exit(1)
     userid = user_info.get("name")
-    image = "ghcr.io/ykxvk8yl5l/spaces/n8n:latest"
+    image = "ghcr.io/ykxvk8yl5l/spaces/baihu:latest"
     if len(args.image) > 0:
         image = args.image
 
-    key = "952a63942ad0c68a"
-    if len(args.key) > 0:
-        key = args.key
+    password = "Hpassword654321"
+    if len(args.password) > 0:
+        password = args.password
     rclone_conf_path = "~/.config/rclone/rclone.conf"
     rclone_conf = ""
     if len(args.rclone_conf_path) > 0:
         rclone_conf_path = args.rclone_conf_path
-    password = ""
-    if len(args.password) > 0:
-        password = args.password
     rclone_conf = read_file_if_not_empty(rclone_conf_path)
-    #space_name = generate_random_string(2)
-    space_name = "n8n"
+
+    space_name = generate_random_string(2)
     repoid = f"{userid}/{space_name}"
 
     # readme.md的字符串内容
     readme_content = f"""
 ---
 title: {space_name}
-emoji: ⚡
+emoji: 😻
 colorFrom: red
-colorTo: gray
+colorTo: blue
 sdk: docker
-app_port: 5700
+app_port: 8052
 pinned: false
 ---
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
     """
+
     # 转成 file-like object（以字节形式）
     readme_obj = BytesIO(readme_content.encode("utf-8"))
-
     api.create_repo(
         repo_id=repoid,
         repo_type="space",
         space_sdk="docker",
         space_secrets=[
-            {"key": "N8N_ENCRYPTION_KEY", "value": key},
-            {"key": "RCLONE_CONF", "value": rclone_conf},
             {"key": "ADMIN_PASSWORD", "value": password},
-        ],
-        space_variables=[
-            {"key": "GENERIC_TIMEZONE", "value": "Asia/Shanghai"},
-            {"key": "TZ", "value": "Asia/Shanghai"},
-            {"key": "N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS", "value": "true"},
-            {"key": "WEBHOOK_URL", "value": f"https://{userid}-{space_name}.hf.space"},
+            {"key": "RCLONE_CONF", "value": rclone_conf},
         ],
     )
-
     api.upload_file(
         repo_id=repoid,
         path_in_repo="README.md",
